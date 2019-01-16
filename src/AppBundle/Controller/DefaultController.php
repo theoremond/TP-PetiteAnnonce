@@ -32,7 +32,7 @@ class DefaultController extends Controller
         $configYml = Yaml::parse(file_get_contents($ymlPersonnesFiles[0], false, null));
 
         return $this->render('base.html.twig', [
-            'personnes' => $configYml
+            'personnes' => $configYml['personnes']
         ]);
     }
 }
