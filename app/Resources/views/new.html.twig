@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block formAdd %}
+    <div class="container-fluid">
+        <h1>Créer</h1>
+        <br>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
