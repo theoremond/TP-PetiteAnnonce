@@ -22,6 +22,12 @@ class Annonce
     private $id;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="annonces")
+    * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id", onDelete="CASCADE")
+    */
+    private $categorie;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
