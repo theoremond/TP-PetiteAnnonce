@@ -65,6 +65,16 @@ class AdvertisementType extends Controller
                     )
                 )
             )
+            -> add(
+                'categorie',
+                TextType::class,
+                array(
+                    'label' => 'Categorie',
+                    'attr' => array(
+                        'placeholder' => 'La catégorie'
+                    )
+                )
+            )
             ->add(
                 'Valider',
                 SubmitType::class,

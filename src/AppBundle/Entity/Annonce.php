@@ -161,5 +161,29 @@ class Annonce
     {
         return $this->zipcode;
     }
+
+    /**
+     * Set categorie
+     *
+     * @param string $categorie
+     *
+     * @return Annonce
+     */
+    public function setCategorie($categorie)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get zipcode
+     *
+     * @return string
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
 }
 
