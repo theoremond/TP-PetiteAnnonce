@@ -2,7 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Categorie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -14,9 +17,10 @@ class AdvertisementType extends Controller
 {
 
     /**
-     * @Route("/creer_annonce") 
+     * @Route("/annonce/create")
      */
     public function create(Request $request) {
+
         $annonce = new Annonce();
 
         $form = $this->createFormBuilder(
@@ -37,7 +41,7 @@ class AdvertisementType extends Controller
             )
             -> add(
                 'price',
-                TextType::class,
+                NumberType::class,
                 array(
                     'label' => 'Le prix de l\'annonce',
                     'attr' => array(
@@ -67,16 +71,17 @@ class AdvertisementType extends Controller
             )
             -> add(
                 'categorie',
-                TextType::class,
+                EntityType::class,
                 array(
+                    'class' => 'AppBundle:Categorie',
                     'label' => 'Categorie',
-                    'attr' => array(
-                        'placeholder' => 'La catégorie'
-                    )
+                    'choice_label' => function ($categorie) {
+                        return $categorie->getNom();
+                    }
                 )
             )
             ->add(
-                'Valider',
+                'save',
                 SubmitType::class,
                 array(
                     'label' => 'Valider',
@@ -84,15 +89,24 @@ class AdvertisementType extends Controller
             )
             ->getForm();
 
-        $entityManager = $this->getDoctrine()->getManager();
+        $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
             $annonce = $form->getData();
+
 
             $entityManager->persist($annonce);
             $entityManager->flush();
 
+
+            return $this->render(
+                'new.html.twig',
+                array(
+                    'form' => $form->createView(),
+                )
+            );
             // return to -> annonce;
         } else {
             return $this->render(
